@@ -1,20 +1,15 @@
-class SquaresIterator:
-    def __init__(self, n: int):
-        self.n = n
-        self.current = 1
+import functools
 
-    def __iter__(self):
-        return self
+def how_are_you(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        input("Как дела? ")
+        print("А у меня не очень! Ладно, держи свою функцию.")
+        return func(*args, **kwargs)
+    return wrapper
 
-    def __next__(self):
-        if self.current > self.n:
-            raise StopIteration
-        result = self.current ** 2
-        self.current += 1
-        return result
+@how_are_you
+def test():
+    print("<Тут что-то происходит...>")
 
-# Использование:
-n = int(input("Введите число N: "))
-squares_iter = SquaresIterator(n)
-for square in squares_iter:
-    print(square)
+test()
